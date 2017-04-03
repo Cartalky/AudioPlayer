@@ -35,13 +35,13 @@ extension NSNotification.Name {
 func callback(reachability: SCNetworkReachability, flags: SCNetworkReachabilityFlags, info: UnsafeMutableRawPointer?) {
     guard let info = info else { return }
 
-    let reachability = Unmanaged<Reachability>.fromOpaque(info).takeUnretainedValue()
+    let reachability = Unmanaged<AudioReachability>.fromOpaque(info).takeUnretainedValue()
     DispatchQueue.main.async {
         reachability.reachabilityChanged(flags: flags)
     }
 }
 
-class Reachability: NSObject {
+class AudioReachability: NSObject {
     enum NetworkStatus {
         case notReachable, reachableViaWiFi, reachableViaWWAN
     }
@@ -93,7 +93,7 @@ class Reachability: NSObject {
         var context = SCNetworkReachabilityContext(version: 0, info: nil, retain: nil, release: nil,
                                                    copyDescription: nil)
         context.info = UnsafeMutableRawPointer(
-            Unmanaged<Reachability>.passUnretained(self).toOpaque())
+            Unmanaged<AudioReachability>.passUnretained(self).toOpaque())
 
         if SCNetworkReachabilitySetCallback(reachabilityRef, callback, &context) {
             if SCNetworkReachabilitySetDispatchQueue(reachabilityRef, reachabilitySerialQueue) {

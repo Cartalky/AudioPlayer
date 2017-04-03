@@ -21,8 +21,8 @@ public class AudioPlayer: NSObject {
     /// The background handler.
     let backgroundHandler = BackgroundHandler()
 
-    /// Reachability for network connection.
-    let reachability = Reachability()
+    /// AudioReachability for network connection.
+    let reachability = AudioReachability()
 
     // MARK: Event producers
 

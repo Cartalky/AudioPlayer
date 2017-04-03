@@ -28,7 +28,7 @@ class NetworkEventProducer: NSObject, EventProducer {
     }
 
     /// The reachability to work with.
-    let reachability: Reachability
+    let reachability: AudioReachability
 
     /// The date at which connection was lost.
     private(set) var connectionLossDate: NSDate?
@@ -40,12 +40,12 @@ class NetworkEventProducer: NSObject, EventProducer {
     private var listening = false
 
     /// The last status received.
-    private var lastStatus: Reachability.NetworkStatus
+    private var lastStatus: AudioReachability.NetworkStatus
 
     /// Initializes a `NetworkEventProducer` with a reachability.
     ///
     /// - Parameter reachability: The reachability to work with.
-    init(reachability: Reachability) {
+    init(reachability: AudioReachability) {
         lastStatus = reachability.currentReachabilityStatus
         self.reachability = reachability
 
@@ -95,7 +95,7 @@ class NetworkEventProducer: NSObject, EventProducer {
         listening = false
     }
 
-    /// The method that will be called when Reachability generates an event.
+    /// The method that will be called when AudioReachability generates an event.
     ///
     /// - Parameter note: The notification information.
     @objc fileprivate func reachabilityStatusChanged(note: NSNotification) {
